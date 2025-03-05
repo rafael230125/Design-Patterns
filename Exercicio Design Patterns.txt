@@ -1,0 +1,110 @@
+//    Exercicio 01
+class Retangulo {
+    largura: number;
+    altura: number;
+
+    constructor(largura: number, altura: number) {
+        this.largura = largura;
+        this.altura = altura;
+    }
+
+    calcularArea(): number {
+        return this.largura * this.altura;
+    }
+
+    exibirArea(): void {
+        const area = this.calcularArea();
+        console.log(`A área do retângulo é: ${area}`);
+    }
+}
+
+const retangulo = new Retangulo(10, 5);
+retangulo.exibirArea(); // Saída: A área do retângulo é: 50
+
+//Exercicio 02
+class Todo {
+    private tarefas: string[]; 
+
+    constructor() {
+        this.tarefas = []; 
+    }
+
+    adicionarTarefa(tarefa: string): void {
+        this.tarefas.push(tarefa); 
+    }
+
+    listarTarefas(): string {
+        let lista = "Lista de Tarefas:\n";
+        this.tarefas.forEach((tarefa, index) => {
+            lista += `${index + 1}. ${tarefa}\n`;
+        });
+        return lista.trim();
+    }
+
+    removerTarefa(index: number): void {
+        if (index >= 0 && index < this.tarefas.length) {
+            const tarefaRemovida = this.tarefas.splice(index, 1)[0];
+            console.log(`Tarefa "${tarefaRemovida}" removida.`);
+        } else {
+            console.log("Índice inválido.");
+        }
+    }
+}
+
+const todo = new Todo();
+todo.adicionarTarefa("Estudar TypeScript");
+todo.adicionarTarefa("Fazer exercício de matemática");
+todo.removerTarefa(0);
+console.log(todo.listarTarefas());
+
+//Exercicio 3
+class Conta {
+    private numero: number;
+    private saldo: number;
+
+    constructor(numero: number, saldoInicial: number) {
+        this.numero = numero;
+        this.saldo = saldoInicial;
+        console.log(`Conta ${numero} criada com saldo inicial de R$${saldoInicial}.`);
+    }
+
+    depositar(valor: number): void {
+        this.saldo += valor;
+        console.log(`Depósito de R$${valor} realizado na conta ${this.numero}. Novo saldo: R$${this.saldo}.`);
+    }
+
+    sacar(valor: number): void {
+        if (this.saldo >= valor) {
+            this.saldo -= valor;
+            console.log(`Saque de R$${valor} realizado na conta ${this.numero}. Novo saldo: R$${this.saldo}.`);
+        } else {
+            console.log("Saldo insuficiente.");
+        }
+    }
+
+    consultarSaldo(): void {
+        console.log(`Saldo da conta ${this.numero}: R$${this.saldo}.`);
+    }
+}
+
+class Banco {
+    private contas: Conta[] = [];
+
+    criarConta(numero: number, saldoInicial: number): Conta {
+        const novaConta = new Conta(numero, saldoInicial);
+        this.contas.push(novaConta);
+        return novaConta;
+    }
+
+    obterConta(numero: number): Conta | undefined {
+        return this.contas.find(conta => conta.numero === numero);
+    }
+}
+
+// Exemplo de uso:
+const banco = new Banco();
+const conta1 = banco.criarConta(123, 1000);
+conta1.depositar(500);
+conta1.sacar(200);
+conta1.consultarSaldo();
+
